@@ -1,7 +1,7 @@
 ## Gradient Blend
 
 
-### Demoe
+### Demo
 
 <div align="center">
     <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/mask.png">

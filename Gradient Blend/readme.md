@@ -35,11 +35,11 @@
 		
 		A(i, i) = 4	 
 		if mask(i, j)
-			A(i, j) = -1
-			b(i) = fore_laplace(i, j)
+		    A(i, j) = -1
+		    b(i) = fore_laplace(i, j)
 		else
-			A(i, j) = 0  
-			b(i) = fore_laplace(i, j) + back(i, j)
+		    A(i, j) = 0  
+		    b(i) = fore_laplace(i, j) + back(i, j)
 		   
 5. 求解变量x
 

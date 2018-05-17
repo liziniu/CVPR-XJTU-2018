@@ -3,13 +3,10 @@
 
 ### Demo
 
-<div align="center">
-    <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask1.png">
-</div>
+ Mask | Result
+ ---- | ------
+ ![mask1]("https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask1.png") | ![res1]("https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res1.png")| ![mask2]("https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask2.png") | ![res2]("https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res2.png")| ![mask3]("https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask3.png") | ![res3]("https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res3.png")| ![mask4]("https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask4.png") | ![res4]("https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res4.png")|
 
-<div align="center">
-  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res1.png">
-</div>
 
 <div align="center">
     <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask2.png">

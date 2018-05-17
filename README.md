@@ -1,1 +1,3 @@
-# cvpr_2018_spring
+## Computer Vision and Pattern Recognition
+
+2018 Spring Course, CVPR, in XJTU.

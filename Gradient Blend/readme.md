@@ -4,11 +4,35 @@
 ### Demo
 
 <div align="center">
-    <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/mask.png">
+    <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask1.png">
 </div>
 
 <div align="center">
-  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/blend%20image.png">
+  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res1.png">
+</div>
+
+<div align="center">
+    <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask2.png">
+</div>
+
+<div align="center">
+  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res2.png">
+</div>
+
+<div align="center">
+    <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask3.png">
+</div>
+
+<div align="center">
+  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res3.png">
+</div>
+
+<div align="center">
+    <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask4.png">
+</div>
+
+<div align="center">
+  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res4.png">
 </div>
 
 ### How to use it

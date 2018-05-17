@@ -11,13 +11,13 @@
 Take a 2-dimension transform as an example, the columns of matrix A are the base vector in new space. 
 
 <div align="center">
-   <img src="https://upload-images.jianshu.io/upload_images/6408339-932f2dc0482af264.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+   <img src="https://upload-images.jianshu.io/upload_images/6408339-932f2dc0482af264.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="300" height="300">
 </div>
 
 It is also applicable to 3-dimension.
 
 <div align="center">
-  <img src="https://upload-images.jianshu.io/upload_images/6408339-3e818e0e433d93f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  <img src="https://upload-images.jianshu.io/upload_images/6408339-3e818e0e433d93f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="300" height="300">
 </div>
         
 

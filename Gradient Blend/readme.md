@@ -11,30 +11,6 @@
  ![mask4](https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask4.png) | ![res4](https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res4.png)
 
 
-<div align="center">
-    <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask2.png">
-</div>
-
-<div align="center">
-  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res2.png">
-</div>
-
-<div align="center">
-    <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask3.png">
-</div>
-
-<div align="center">
-  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res3.png">
-</div>
-
-<div align="center">
-    <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/mask4.png">
-</div>
-
-<div align="center">
-  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Gradient%20Blend/img/res4.png">
-</div>
-
 ### How to use it
 
 1. Draw a mask free hand.

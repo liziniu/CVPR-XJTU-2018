@@ -3,8 +3,8 @@
 ### Demo
 
 <div align="center">
-   <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Harris%20Corner%20Detection/affine_registration/concatenate.png">
-   <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Harris%20Corner%20Detection/affine_registration/merged_img.png">
+   <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Harris%20Corner%20Detection/affine_registration/concatenate.png" height="500" width="1000">
+   <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Harris%20Corner%20Detection/affine_registration/merged_img.png" height="600" width="700">
 </div>
 
 ### Principle

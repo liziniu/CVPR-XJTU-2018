@@ -6,7 +6,7 @@
 <div align="center">
   <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Harris%20Corner%20Detection/img/pic.png"  height="500" width="500" title="origin image">
   
-  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Harris%20Corner%20Detection/img/corners.png" height="500" width="500" title="corner">
+  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Harris%20Corner%20Detection/img/corners.png" height="600" width="600" title="corner">
 </div>
   
 

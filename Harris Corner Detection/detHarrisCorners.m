@@ -29,12 +29,12 @@ Ix = conv2(img, fx, 'same');
 Iy = conv2(img, fy, 'same');
 
 if(interactive)
-    figure(1); % imagesc ¶ÔÍ¼Ïñ½øĞĞËõ·ÅºóÏÔÊ¾
+    figure(1); % imagesc å¯¹å›¾åƒè¿›è¡Œç¼©æ”¾åæ˜¾ç¤º
     subplot(1,2,1); imagesc(Ix); axis equal image off; colormap('gray'); title('Ix');
     subplot(1,2,2); imagesc(Iy); axis equal image off; colormap('gray'); title('Iy');
     cdata = print('-RGBImage');
     %imwrite(cdata, fullfile('corner', [name, '-grad.png']));
-    imwrite(cdata, '/Users/liziniu/Downloads/¼ÆËã»úÊÓ¾õÓëÄ£Ê½Ê¶±ğ/½Çµã¼ì²â/affine_transform/corner/grad.png');
+    imwrite(cdata, '/Users/liziniu/Downloads/è®¡ç®—æœºè§†è§‰ä¸æ¨¡å¼è¯†åˆ«/è§’ç‚¹æ£€æµ‹/affine_transform/corner/grad.png');
 end
 
 %% Raw Hessian Matrix
@@ -51,7 +51,7 @@ if(interactive)
     subplot(2,2,4); imagesc(Iyy); axis equal image off; colormap('gray'); title('Ixy');
     cdata = print('-RGBImage');
     %imwrite(cdata, fullfile('corner', [name, '-rawHessian.png']));
-    imwrite(cdata, '/Users/liziniu/Downloads/¼ÆËã»úÊÓ¾õÓëÄ£Ê½Ê¶±ğ/½Çµã¼ì²â/affine_transform/corner/rawHessian.png');
+    imwrite(cdata, '/Users/liziniu/Downloads/è®¡ç®—æœºè§†è§‰ä¸æ¨¡å¼è¯†åˆ«/è§’ç‚¹æ£€æµ‹/affine_transform/corner/rawHessian.png');
 end
 
 %% Gaussian filter definition (https://en.wikipedia.org/wiki/Canny_edge_detector)
@@ -71,7 +71,7 @@ if(interactive)
     subplot(2,2,4); imagesc(Iyy); axis equal image off; colormap('gray'); title('Iyy');
     cdata = print('-RGBImage');
     %imwrite(cdata, fullfile('corner', [name, '-smoothHessian.png']));
-    imwrite(cdata, '/Users/liziniu/Downloads/¼ÆËã»úÊÓ¾õÓëÄ£Ê½Ê¶±ğ/½Çµã¼ì²â/affine_transform/corner/smoothHessian.png');
+    imwrite(cdata, '/Users/liziniu/Downloads/è®¡ç®—æœºè§†è§‰ä¸æ¨¡å¼è¯†åˆ«/è§’ç‚¹æ£€æµ‹/affine_transform/corner/smoothHessian.png');
 end
 
 %%
@@ -79,6 +79,7 @@ end
 %{
 if(interactive)
     delta = (Ixx + Iyy).^2 - 4 * 1 * (Ixx.*Iyy - Ixy .* Ixy);
+    delta = max(delta, 0);
     lambda1 = 0.5 * ((Ixx + Iyy) + sqrt(delta));
     lambda2 = 0.5 * ((Ixx + Iyy) - sqrt(delta));
     figure(6); 
@@ -93,7 +94,7 @@ k = 0.05; % usually in the range[0.04 0.06]
 % R = lambda1.*lambda2 - k*(lambda1 + lambda2).^2;
 
 
-f = @(M) det(M) - k*trace(M)
+f = @(M) det(M) - k*trace(M)^2
 R = zeros(nr, nc);
 for j = 1:nr
     for i = 1: nc
@@ -132,7 +133,7 @@ if(interactive)
     subplot(1,2,2); imagesc(R .* corner); title('After Non-Local Maximum Suppression');axis equal image off; colormap('gray');
     cdata = print('-RGBImage');
     %imwrite(cdata, fullfile('corner', [name, '-cornerness.png']));
-    imwrite(cdata, '/Users/liziniu/Downloads/¼ÆËã»úÊÓ¾õÓëÄ£Ê½Ê¶±ğ/½Çµã¼ì²â/affine_transform/corner/cornerness.png');
+    imwrite(cdata, '/Users/liziniu/Downloads/è®¡ç®—æœºè§†è§‰ä¸æ¨¡å¼è¯†åˆ«/è§’ç‚¹æ£€æµ‹/affine_transform/corner/cornerness.png');
 end
 
 [iLoc, jLoc] = find(R.*corner > corn_thresh * rmax);
@@ -145,7 +146,7 @@ if(interactive)
     hold off;
     cdata = print('-RGBImage');
     %imwrite(cdata, fullfile('corner', [name, '-corners.png']));
-    imwrite(cdata, '/Users/liziniu/Downloads/¼ÆËã»úÊÓ¾õÓëÄ£Ê½Ê¶±ğ/½Çµã¼ì²â/affine_transform/corner/corners.png');
+    imwrite(cdata, '/Users/liziniu/Downloads/è®¡ç®—æœºè§†è§‰ä¸æ¨¡å¼è¯†åˆ«/è§’ç‚¹æ£€æµ‹/affine_transform/corner/corners.png');
 end
 
 % assign the output variables

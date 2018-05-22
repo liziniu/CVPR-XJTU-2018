@@ -1,40 +1,40 @@
 % demo_harris_ncc_affine_registration
 clear; clc;
-%% »ñÈ¡Á½·ùÍ¼Ïñ
-im1 = imresize3(imread('pic5.jpg'), [600, 800, 3]);
-im2 = imresize3(imread('pic6.jpg'), [600, 800, 3]);
-figure(1);imshow(cat(2, im1,im2));title('Æ´½ÓºóµÄÍ¼Ïñ');
+%% è·å–ä¸¤å¹…å›¾åƒ
+im1 = imresize3(imread('pic3.jpg'), [600, 800, 3]);
+im2 = imresize3(imread('pic4.jpg'), [600, 800, 3]);
+figure(1);imshow(cat(2, im1,im2));title('æ‹¼æ¥åçš„å›¾åƒ');
 imwrite(rgb2gray(im1),'pic3_gray.png');
 imwrite(rgb2gray(im2),'pic4_gray.png');
 
-%% ÀûÓÃÎÒÃÇ×Ô¼ºĞ´µÄ½Çµã¼ì²â³ÌĞò½øĞĞ½ÇµãÌáÈ¡
+%% åˆ©ç”¨æˆ‘ä»¬è‡ªå·±å†™çš„è§’ç‚¹æ£€æµ‹ç¨‹åºè¿›è¡Œè§’ç‚¹æå–
 [Locs1,cornerness1] = detHarrisCorners(im1, 0.1);
 [Locs2,cornerness2] = detHarrisCorners(im2, 0.1);
 
-% ÌáÈ¡Í¼ÏñµÄÌØÕ÷£¬ÎªNCC·şÎñ
+% æå–å›¾åƒçš„ç‰¹å¾ï¼Œä¸ºNCCæœåŠ¡
 descps1 = extractNccFeature(im1, Locs1, 20);
 descps2 = extractNccFeature(im2, Locs2, 20);
 
-% ½øĞĞÌØÕ÷µÄÆ¥Åä
-dist = descps1 * descps2';      %£¨410£¬484£©
+% è¿›è¡Œç‰¹å¾çš„åŒ¹é…
+dist = descps1 * descps2';      %ï¼ˆ410ï¼Œ484ï¼‰
 
-% Ñ¡ÔñÌØÕ÷
-[vals, idxs] = max(dist,[], 2);  %£¨410£¬1£© idxsÎªdistÖĞµÄË÷Òı
+% é€‰æ‹©ç‰¹å¾
+[vals, idxs] = max(dist,[], 2);  %ï¼ˆ410ï¼Œ1ï¼‰ idxsä¸ºdistä¸­çš„ç´¢å¼•
 threshold = 0.75;
-idxs1 = find(vals>threshold);    % idxs1ÎªidxsµÄË÷Òı
-idxs2 = idxs(idxs1);             % distÖĞµÄË÷Òı
+idxs1 = find(vals>threshold);    % idxs1ä¸ºidxsçš„ç´¢å¼•
+idxs2 = idxs(idxs1);             % distä¸­çš„ç´¢å¼•
 Locs1 = Locs1(idxs1,:);          
 
-% »æÖÆÆ¥Åäµã
+% ç»˜åˆ¶åŒ¹é…ç‚¹
 figure(1);clf;imshow(cat(2, im1,im2)); hold on;
 plot(Locs1(:,1),Locs1(:,2), 'ro', 'markersize',10);
 plot(Locs2(idxs2,1)+size(im1,2), Locs2(idxs2,2), 'gx','markersize',10);
-title('»æÖÆÆ¥Åäµã');
+title('ç»˜åˆ¶åŒ¹é…ç‚¹');
 % for i = 1 : size(Locs1,1)
 %    plot([Locs1(i,1), Locs2(idxs2(i),1)+size(im1,2)],...
 %         [Locs1(i,2), Locs2(idxs2(i),2)], 'r-');
 % end
-% ±£´æÍ¼Ïñ
+% ä¿å­˜å›¾åƒ
 cdata = print('-RGBImage');
 imwrite(cdata, 'harris2img_raw.png');
 
@@ -43,7 +43,7 @@ im1g = rgb2gray(im1); im1g = imresize(im1g,0.15);
 im2g = rgb2gray(im2); im2g = imresize(im2g,0.15);
 
 %%
-% ÓÃRansac¹À¼Æ·ÂÉä±ä»»
+% ç”¨Ransacä¼°è®¡ä»¿å°„å˜æ¢
 ntrials = 10000;
 [A, inlineridxs] = est_optimal_Affine_ransac(Locs2(idxs2,:), Locs1,  ntrials);
 
@@ -51,7 +51,7 @@ ntrials = 10000;
 %     -0.01 0.92  69]
 
  
-figure(2); clf; title('Ransac¹À¼Æ·ÂÉä±ä»»');imshow(cat(2, im1,im2)); hold on;
+figure(2); clf; title('Ransacä¼°è®¡ä»¿å°„å˜æ¢');imshow(cat(2, im1,im2)); hold on;
 plot(Locs1(:,1),Locs1(:,2), 'ro', 'markersize',10);
 plot(Locs2(idxs2,1)+size(im1,2), Locs2(idxs2,2), 'gx','markersize',10);
 
@@ -59,7 +59,7 @@ for i = 1 : numel(inlineridxs)
    plot([Locs1(inlineridxs(i),1), Locs2(idxs2(inlineridxs(i)),1)+size(im1,2)],...
         [Locs1(inlineridxs(i),2), Locs2(idxs2(inlineridxs(i)),2)], 'ro','markersize',10);
 end
-% ±£´æÍ¼Ïñ
+% ä¿å­˜å›¾åƒ
 cdata = print('-RGBImage');
 imwrite(cdata, 'harris2img_ransac.png');
 
@@ -72,12 +72,12 @@ Aff = A;
 
 x2bound_transformed = Aff * [xsbound2;ysbound2;ones(1,4)];
 
-% »æÖÆ³öÀ´±ß¿ò
+% ç»˜åˆ¶å‡ºæ¥è¾¹æ¡†
 figure(1); hold on;
 plot([x2bound_transformed(1,:) x2bound_transformed(1,1)],...
      [x2bound_transformed(2,:) x2bound_transformed(2,1)],'r-');
 
-% ¼ÆËãºÏ³ÉÁ½·ùÕÕÆ¬
+% è®¡ç®—åˆæˆä¸¤å¹…ç…§ç‰‡
 nx1 = size(im1,2); ny1 = size(im1,1);
 xlo = min([1 x2bound_transformed(1,:)]); xlo = floor(xlo);
 xhi = max([nx1 x2bound_transformed(1,:)]); xhi = ceil(xhi);
@@ -85,17 +85,17 @@ ylo = min([1 x2bound_transformed(2,:)]); ylo = floor(ylo);
 yhi = max([ny1 x2bound_transformed(2,:)]); yhi = ceil(yhi);
 
 %%
-% ¼ÇÂ¼Á½¸ö±ß¿ò
-% ¼ÓÉÏxlo-1, ylo-1µÄÆ«ÒÆ
-% Èç¹ûxlo, yloÔÚim1ÄÚ²¿£¬ÔòÆ«ÒÆ
-% ·ñÔò£¬
+% è®°å½•ä¸¤ä¸ªè¾¹æ¡†
+% åŠ ä¸Šxlo-1, ylo-1çš„åç§»
+% å¦‚æœxlo, yloåœ¨im1å†…éƒ¨ï¼Œåˆ™åç§»
+% å¦åˆ™ï¼Œ
 bounds = cell(2,4);
 bounds{1,1} = [1 nx1 nx1 1;1 1 ny1 ny1] + repmat([-xlo+1;-ylo+1],[1 4]);
 % [1 nx1 nx1  1;        [-xlo+1; -xlo+1; -xlo+1; -xlo+1;      [xlo, nx1+xlo-1, nx1+xlo-1,    xlo 
 %  1  1  ny1 ny1;]  -   [-ylo+1; -ylo+1; -ylo+1; -ylo+1;]  =   ylo,     ylo,   ny1+ylo-1, ny1+ylo-1]
-% Ğ§¹û£º
-% Èç¹ûxlo> 1, ylo > 1, ÔòÈÔÎªimg1µÄËÄ¸ö¶¥µã
-% ·ñÔòÎª(xlo, ylo), (xhi, yhi)×é³ÉµÄ¾ØÕó¼ÓÉÏ(nx1, ny1)µÄÆ«ÒÆ
+% æ•ˆæœï¼š
+% å¦‚æœxlo> 1, ylo > 1, åˆ™ä»ä¸ºimg1çš„å››ä¸ªé¡¶ç‚¹
+% å¦åˆ™ä¸º(xlo, ylo), (xhi, yhi)ç»„æˆçš„çŸ©é˜µåŠ ä¸Š(nx1, ny1)çš„åç§»
 % ---------------
 % |  
 % |   ????????????
@@ -105,9 +105,9 @@ bounds{1,1} = [1 nx1 nx1 1;1 1 ny1 ny1] + repmat([-xlo+1;-ylo+1],[1 4]);
 bounds{2,1} = x2bound_transformed + repmat([-xlo+1;-ylo+1],[1 4]);
 % [1'+xlo-1, nx1'+xlo-1, nx1'+xlo-1, 1'+xlo-1;
 % [1'+ylo-1, 1'+ylo-1,   ny1'+ylo-1, ny1'+ylo-1]
-% Ğ§¹û£º
-% Èç¹ûxlo > 1, ylo >1, ÔòÈÔÎªimg2µÄËÄ¸ö¶¥µã·ÂÉä±ä»»ºóµÄËÄ¸ö¶¥µã
-% ·ñÔò
+% æ•ˆæœï¼š
+% å¦‚æœxlo > 1, ylo >1, åˆ™ä»ä¸ºimg2çš„å››ä¸ªé¡¶ç‚¹ä»¿å°„å˜æ¢åçš„å››ä¸ªé¡¶ç‚¹
+% å¦åˆ™
 
 bounds{1,2} = [1 0 -xlo+1; 
                0 1 -ylo+1];
@@ -119,8 +119,8 @@ bounds{2,2}(:,3) = bounds{2,2}(:,3) - [-xlo+1;-ylo+1];
 %  a21 a22 b2+ylo-1;]
 
 
-% Éú³ÉMaskĞÅÏ¢
-% ÒÔ(nx1/2, ny1/2), (nx2/2, ny2/2)ÎªÖĞĞÄµÄ¸ßË¹ÂË²¨
+% ç”ŸæˆMaskä¿¡æ¯
+% ä»¥(nx1/2, ny1/2), (nx2/2, ny2/2)ä¸ºä¸­å¿ƒçš„é«˜æ–¯æ»¤æ³¢
 sigma = 0.75;
 [xg1,yg1] = meshgrid(1:nx1, 1:ny1); 
 mask1 = (xg1 - nx1/2.0).^2 ./(sigma*nx1)^2 + (yg1 - ny1/2.0).^2./(sigma*ny1)^2;
@@ -133,14 +133,14 @@ bounds{2,3} = exp(-mask2);
 bounds{1,4} = im1;
 bounds{2,4} = im2;
 
-%% ½øĞĞÍ¼ÏñµÄºÏ²¢
+%% è¿›è¡Œå›¾åƒçš„åˆå¹¶
 nc = size(im1,3);
 imTotal = zeros(yhi-ylo+1, xhi-xlo+1, nc);
 
-% Éè¼ÆÒ»¸öMask
+% è®¾è®¡ä¸€ä¸ªMask
 maskTotal = zeros(yhi-ylo+1, xhi-xlo+1);
 
-% ¿ªÊ¼Å²¶¯Í¼ÏñÇøÓò
+% å¼€å§‹æŒªåŠ¨å›¾åƒåŒºåŸŸ
 figure(2);clf; imshow(uint8(imTotal)); title('imTotal');
 hold on;
 for i = 1 : 2

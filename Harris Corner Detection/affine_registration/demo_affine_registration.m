@@ -1,11 +1,12 @@
 
-%% ��ȡ����ͼ��
-im1 = imresize3(imread('pic3.png'), [1000, 1000, 3]);
-im2 = imresize3(imread('pic4.png'), [1000, 1000, 3]);
+%% 锟斤拷取锟斤拷锟斤拷图锟斤拷
+im1 = imresize3(imread('pic1.jpg'), [600, 800, 3]);
+im2 = imresize3(imread('pic2.jpg'), [600, 800, 3]);
 figure(1);clf; imshow(cat(2, im1,im2));
 
-%% ����ginput��ȡ������
-if(exist('leftpoints.mat','file') && exist('rightpoints.mat','file'))
+%% 锟斤拷锟斤拷ginput锟斤拷取锟斤拷锟斤拷锟斤拷
+if(0)
+%if(exist('leftpoints.mat','file') && exist('rightpoints.mat','file'))
     left = load('leftpoints.mat');
     xsLeft = left.xsLeft; ysLeft = left.ysLeft;
     right = load('rightpoints.mat');
@@ -50,17 +51,17 @@ else
     save('rightpoints.mat', 'xsRight', 'ysRight');
 end
 
-% ����ͼ��
+% 锟斤拷锟斤拷图锟斤拷
 cdata = print('-RGBImage');
 imwrite(cdata, 'concatenate.png');
 
-%% ������ѵķ���任
-% ���ұߵĵ�ͨ������任�任�����
+%% 锟斤拷锟斤拷锟斤拷训姆锟斤拷锟戒换
+% 锟斤拷锟揭边的碉拷通锟斤拷锟斤拷锟斤拷浠伙拷浠伙拷锟斤拷锟斤拷
 npoints = length(xsRight); 
 onevec = ones(npoints,1);
 zeromat = zeros(npoints,3);
 
-% �???A??b 
+% 濉???A??b 
 A = [xsRight(1), ysRight(1), 1, 0, 0, 0;
      0, 0, 0, xsRight(1), ysRight(1), 1;
      xsRight(2), ysRight(2), 1, 0, 0, 0;
@@ -71,7 +72,7 @@ b = [xsLeft(1);ysLeft(1);xsLeft(2);ysLeft(2);xsLeft(3);ysLeft(3);];
 
 x = A\b;
 
-%% ���Ƶڶ���ͼ��ı߿��ڵ�һ��ͼ���еı任����?
+%% 锟斤拷锟狡第讹拷锟斤拷图锟斤拷谋呖锟斤拷诘锟揭伙拷锟酵硷拷锟斤拷械谋浠伙拷锟斤拷锟?
 nx2 = size(im2,2); ny2 = size(im2,1);
 xsbound2 = [1 nx2 nx2 1];
 ysbound2 = [1 1 ny2 ny2];
@@ -85,16 +86,16 @@ Aff = [x(1:3)'; x(4:6)'];
 %  1  1  ny2 ny2;
 %  1  1   1   1;]
 
-x2bound_transformed = Aff * [xsbound2;ysbound2;ones(1,4)];    % im2���ĸ��������任�������
+x2bound_transformed = Aff * [xsbound2;ysbound2;ones(1,4)];    % im2的四个顶点仿射变换后的坐标
 % [2, 4]
 
-% �ĸ�����任��ĵ���ɵ��ı��α߿�
+% 四个仿射变换后的点组成的四边形边框
 figure(1); hold on;
 plot([x2bound_transformed(1,:) x2bound_transformed(1,1)],...
      [x2bound_transformed(2,:) x2bound_transformed(2,1)],'r-');
  
 
-% ����ϳ��������?
+% 锟斤拷锟斤拷铣锟斤拷锟斤拷锟斤拷锟狡?
 nx1 = size(im1,2); ny1 = size(im1,1);
 xlo = min([1 x2bound_transformed(1,:)]); xlo = floor(xlo);
 xhi = max([nx1 x2bound_transformed(1,:)]); xhi = ceil(xhi);
@@ -102,17 +103,17 @@ ylo = min([1 x2bound_transformed(2,:)]); ylo = floor(ylo);
 yhi = max([ny1 x2bound_transformed(2,:)]); yhi = ceil(yhi);
 
 %%
-% ��¼�����߿�
+% 锟斤拷录锟斤拷锟斤拷锟竭匡拷
 bounds = cell(2,4);
-bounds{1,1} = [1 nx1 nx1 1;1 1 ny1 ny1] - repmat([-xlo+1;-ylo+1],[1 4]);
+bounds{1,1} = [1 nx1 nx1 1;1 1 ny1 ny1] + repmat([-xlo+1;-ylo+1],[1 4]);
 % [1 nx1 nx1  1;        [-xlo+1; -xlo+1; -xlo+1; -xlo+1;      [xlo, nx1+xlo-1, nx1+xlo-1,    xlo 
 %  1  1  ny1 ny1;]  -   [-ylo+1; -ylo+1; -ylo+1; -ylo+1;]  =   ylo,     ylo,   ny1+ylo-1, ny1+ylo-1]
-bounds{2,1} = x2bound_transformed - repmat([-xlo+1;-ylo+1],[1 4]);
+bounds{2,1} = x2bound_transformed + repmat([-xlo+1;-ylo+1],[1 4]);
 
 bounds{1,2} = [1 0 -xlo+1; 0 1 -ylo+1];
 bounds{2,2} = Aff; bounds{2,2}(:,3) = bounds{2,2}(:,3) - [-xlo+1;-ylo+1];
 
-% ����Mask��Ϣ
+% 锟斤拷锟斤拷Mask锟斤拷息
 sigma = 0.75;
 [xg1,yg1] = meshgrid(1:nx1, 1:ny1); 
 mask1 = (xg1 - nx1/2.0).^2 ./(sigma*nx1)^2 + (yg1 - ny1/2.0).^2./(sigma*ny1)^2;
@@ -125,14 +126,14 @@ bounds{2,3} = exp(-mask2);
 bounds{1,4} = im1;
 bounds{2,4} = im2;
 
-%% ����ͼ��ĺϲ�?
+%% 锟斤拷锟斤拷图锟斤拷暮喜锟?
 nc = size(im1,3);
 imTotal = zeros(yhi-ylo+1, xhi-xlo+1, nc);
 
-% ���һ��?Mask
+% 锟斤拷锟揭伙拷锟?Mask
 maskTotal = zeros(yhi-ylo+1, xhi-xlo+1);
 
-% ��ʼŲ��ͼ������
+% 锟斤拷始挪锟斤拷图锟斤拷锟斤拷锟斤拷
 figure(2);clf; imshow(uint8(imTotal));
 hold on;
 for i = 1 : 2
@@ -140,7 +141,7 @@ for i = 1 : 2
         [bounds{i,1}(2,:) bounds{i,1}(2,1)], 'r-');
     
    xlo_i = floor(min(bounds{i,1}(1,:)));
-    xhi_i = ceil(max(bounds{i,1}(1,:)));
+   xhi_i = ceil(max(bounds{i,1}(1,:)));
    ylo_i = floor(min(bounds{i,1}(2,:)));
    yhi_i = ceil(max(bounds{i,1}(2,:)));
    
@@ -148,6 +149,7 @@ for i = 1 : 2
    
    Aff = bounds{i,2};
    coords_i = inv(Aff(1:2,1:2)) * ([xg_i(:) yg_i(:)]' - repmat(Aff(:,3),[1, numel(xg_i)]));
+ 
    xcoords_i = reshape(coords_i(1,:), size(xg_i));
    ycoords_i = reshape(coords_i(2,:), size(xg_i));
    
@@ -165,6 +167,6 @@ end
 
 imTotal = imTotal./repmat(maskTotal+1e-20,[1 1,3]);
 figure(5); imshow(uint8(imTotal));
-% ����ͼ��
+% 锟斤拷锟斤拷图锟斤拷
 cdata = print('-RGBImage');
 imwrite(cdata, 'merged_img.png');

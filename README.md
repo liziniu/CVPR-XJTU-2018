@@ -8,6 +8,8 @@
 
    * [Background Transformation](https://github.com/liziniu/cvpr_2018_spring/tree/master/geometric%20transformation/back_ground)
    
+   * [Morphing](https://github.com/liziniu/cvpr_2018_spring/tree/master/geometric%20transformation/Morphing)
+   
 * [Gaussian Pyramid](https://github.com/liziniu/cvpr_2018_spring/tree/master/Gauss%20Pyramid)
 
 * [Canny Edge Detector](https://github.com/liziniu/cvpr_2018_spring/tree/master/Canny%20Edge%20Detector)
@@ -23,5 +25,5 @@
 * [SIFT Feature](https://github.com/liziniu/cvpr_2018_spring/tree/master/SIFT%20Feature)
 
   * [Single-Scale SIFT Feature](https://github.com/liziniu/cvpr_2018_spring/tree/master/SIFT%20Feature/single%20sift%20feature)
-  
+
   

@@ -6,5 +6,6 @@
 
 Source | Target | Morphing
 ------ | -------| --------
-![source1](https://github.com/liziniu/cvpr_2018_spring/blob/master/Morphing/img/f1.jpg){:height="50%" width="50%"} | ![target1](https://github.com/liziniu/cvpr_2018_spring/blob/master/Morphing/img/f2.jpg){:height="50%" width="50%"}  | ![morphing1](https://github.com/liziniu/cvpr_2018_spring/blob/master/Morphing/img/m1.gif)
+
+<img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Morphing/img/f1.jpg" height="500" width="300"> | <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Morphing/img/f2.jpg" height="500" width="300">  | <img  src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Morphing/img/m1.gif">
 ![source2](https://github.com/liziniu/cvpr_2018_spring/blob/master/Morphing/img/f3.png){:height="50%" width="50%"}  | ![target2](https://github.com/liziniu/cvpr_2018_spring/blob/master/Morphing/img/f4.png){:height="50%" width="50%"}  | ![morphing2](https://github.com/liziniu/cvpr_2018_spring/blob/master/Morphing/img/m2.gif)

@@ -27,3 +27,5 @@
   * [Single-Scale SIFT Feature](https://github.com/liziniu/cvpr_2018_spring/tree/master/SIFT%20Feature/single%20sift%20feature)
 
  * [Carving](https://github.com/liziniu/cvpr_2018_spring/tree/master/Carving)
+ 
+ * [QR Decomposition](https://github.com/liziniu/cvpr_2018_spring/tree/master/QR%20Decomposition)

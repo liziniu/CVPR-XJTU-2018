@@ -1,5 +1,5 @@
 function [img_p] = stitch(img1, img2,img3, h1, h3)
-%% ¸ù¾Ýµ¥Ó¦¾ØÕóh,½«imag1, img3×ª»»µ½img2, Î¬³Öimg2µÄh²»±ä
+%% æ ¹æ®å•åº”çŸ©é˜µh,å°†imag1, img3è½¬æ¢åˆ°img2, ç»´æŒimg2çš„hä¸å˜
 % img1: left
 % img2: center
 % img3: right
@@ -20,21 +20,6 @@ h_1 = size(img1, 1); w_1 = size(img1, 2);
 h_3 = size(img3, 1); w_3 = size(img3, 2);
 h_2 = size(img2, 1); w_2 = size(img2, 2); c_2 = size(img2, 3);
 
-%{
-% ¸ù¾Ý±ß½çÇó½âÐèÒªÔö¼ÓµÄ±ß½ç
-x1_bound = [1, w1,  w1,  1;
-            1,  1,  h1, h1;
-            1,  1,   1,  1];
-x3_bound = [1, w3,  w3,  1;
-            1,  1,  h3, h3;
-            1,  1,   1,  1];
-x1_bound_t = h1 * x1_bound; x3_bound_t = h3 * x3_bound;  % 3x4
-% ×ª»¯ÎªÆë´Î×ø±ê
-x1_bound_t = [x1_bound_t(1, :) ./ x1_bound_t(3, :);      % 2x4
-              x1_bound_t(2, :) ./ x1_bound_t(3, :);]    
-x3_bound_t = [x3_bound_t(1, :) ./ x3_bound_t(3, :);      % 2x4
-              x3_bound_t(2, :) ./ x3_bound_t(3, :);]
-%}
 
 h_p = h_2; w_p = w_2 * 2;
 if c_2 == 1
@@ -43,12 +28,12 @@ else
     img_p = zeros(h_p, w_p, c_2);
 end
 
-% ½«img2ÖÃÓÚÖÐÐÄ
+% å°†img2ç½®äºŽä¸­å¿ƒ
 img_p(:, 0.5*w_2:1.5*w_2-1, :) = img2(:, :, :);
 
 figure;
-imshow(uint8(img_p));
-% Ç°Ïò±ä»»
+imshow(uint8(img_p))
+% å‰å‘å˜æ¢
 for j = 1: h_1
     for i = 1: w_1
         x1 = [i; j; 1];                         % 3x1
@@ -56,47 +41,109 @@ for j = 1: h_1
         x1_t = [x1_t(1, :) ./ (x1_t(3, :)+1e-10);       % 
                 x1_t(2, :) ./ (x1_t(3, :)+1e-10)];      % 2x1
         x1_t = x1_t + [0.5*w_2; 0];
-        x1_x = int32(round(x1_t(1, 1))); x1_y = int32(round(x1_t(2, 1)));
+        xlo = int32(floor(x1_t(1, 1))); ylo = int32(round(x1_t(2, 1)));
+        xhi = int32(ceil(x1_t(1, 1))); yhi = int32(ceil(x1_t(2, 1)));
 
-        if x1_x > 0 && x1_x < w_p && x1_y > 0 && x1_y < h_p
-            if img_p(x1_y, x1_x, 1) ~= 0
-                img_p(x1_y, x1_x, :) = 0.5*img_p(x1_y, x1_x, :) + 0.5*img1(j, i, :);
+        if xlo > 0 && ylo > 0 && xlo <= w_p && ylo <= h_p
+            if img_p(ylo, xlo, 1) ~= 0
+                img_p(ylo, xlo, :) = 0.5*img_p(ylo, xlo, :) + 0.5*img1(j, i, :);
             else
-                img_p(x1_y, x1_x, :) = img1(j, i, :);
+                img_p(ylo, xlo, :) = img1(j, i, :);
             end
         else
             continue
         end
+        
+        if xlo > 0 && yhi <= h_p && xlo <= w_p && yhi > 0
+            if img_p(yhi, xlo, 1) ~= 0
+                img_p(yhi, xlo, :) = 0.5*img_p(yhi, xlo, :) + 0.5*img1(j, i, :);
+            else
+                img_p(yhi, xlo, :) = img1(j, i, :);
+            end
+        else
+            continue
+        end  
+        
+        if xhi <= w_p && ylo > 0 && xhi > 0 && ylo <= h_p
+            if img_p(ylo, xhi, 1) ~= 0
+                img_p(ylo, xhi, :) = 0.5*img_p(ylo, xhi, :) + 0.5*img1(j, i, :);
+            else
+                img_p(ylo, xhi, :) = img1(j, i, :);
+            end
+        else
+            continue
+        end
+  
+        if xhi <= w_p && yhi <= h_p && xhi > 0 && yhi>0
+            if img_p(yhi, xhi, 1) ~= 0
+                img_p(yhi, xhi, :) = 0.5*img_p(yhi, xhi, :) + 0.5*img1(j, i, :);
+            else
+                img_p(yhi, xhi, :) = img1(j, i, :);
+            end
+        else
+            continue
+        end        
     end
 end
 
 figure;
 imshow(uint8(img_p));
 
-% ×î½üÁÚµÄ²îÖµ
-
+% å‰å‘å˜æ¢
 for j = 1: h_3
     for i = 1: w_3
-        x3 = [i; j; 1];                                    % 3x1
-        x3_t = h3 * x3;                                    % 3x1
-        x3_t = [x3_t(1, :) ./ (x3_t(3, :)+1e-10);          % 
-                x3_t(2, :) ./ (x3_t(3, :)+1e-10)];         % 2x1
-        x3_t = x3_t + [0.5*w_2; 0];
-        x3_x = int32(round(x3_t(1, 1))); x3_y = int32(round(x3_t(2, 1)));
-        if x3_x > 0 && x3_x < w_p && x3_y > 0 && x3_y < h_p
-            if img_p(x3_y, x3_x, 1) ~= 0
-                img_p(x3_y, x3_x, :) = 0.5*img_p(x3_y, x3_x, :) + 0.5*img3(j, i, :);
+        x1 = [i; j; 1];                         % 3x1
+        x1_t = h3 * x1;                         % 3x1
+        x1_t = [x1_t(1, :) ./ (x1_t(3, :)+1e-10);       % 
+                x1_t(2, :) ./ (x1_t(3, :)+1e-10)];      % 2x1
+        x1_t = x1_t + [0.5*w_2; 0];
+        xlo = int32(floor(x1_t(1, 1))); ylo = int32(round(x1_t(2, 1)));
+        xhi = int32(ceil(x1_t(1, 1))); yhi = int32(ceil(x1_t(2, 1)));
+
+        if xlo > 0 && ylo > 0 && xlo <= w_p && ylo <= h_p
+            if img_p(ylo, xlo, 1) ~= 0
+                img_p(ylo, xlo, :) = 0.5*img_p(ylo, xlo, :) + 0.4*img3(j, i, :);
             else
-                img_p(x3_y, x3_x, :) = img3(j, i, :);
+                img_p(ylo, xlo, :) = img3(j, i, :);
             end
         else
             continue
         end
+        
+        if xlo > 0 && yhi <= h_p && xlo <= w_p && yhi > 0
+            if img_p(yhi, xlo, 1) ~= 0
+                img_p(yhi, xlo, :) = 0.5*img_p(yhi, xlo, :) + 0.4*img3(j, i, :);
+            else
+                img_p(yhi, xlo, :) = img3(j, i, :);
+            end
+        else
+            continue
+        end  
+        
+        if xhi <= w_p && ylo > 0 && xhi > 0 && ylo <= h_p
+            if img_p(ylo, xhi, 1) ~= 0
+                img_p(ylo, xhi, :) = 0.5*img_p(ylo, xhi, :) + 0.4*img3(j, i, :);
+            else
+                img_p(ylo, xhi, :) = img3(j, i, :);
+            end
+        else
+            continue
+        end
+  
+        if xhi <= w_p && yhi <= h_p && xhi > 0 && yhi>0
+            if img_p(yhi, xhi, 1) ~= 0
+                img_p(yhi, xhi, :) = 0.5*img_p(yhi, xhi, :) + 0.4*img3(j, i, :);
+            else
+                img_p(yhi, xhi, :) = img3(j, i, :);
+            end
+        else
+            continue
+        end        
     end
 end
 
 
-% Ë«ÏßÐÔµÄ²åÖµ
+% åŒçº¿æ€§çš„æ’å€¼
 %{
 for j = 1: h_3
     for i = 1: w_3
@@ -108,7 +155,7 @@ for j = 1: h_3
         x3_x = x3_t(1, 1); x3_y = x3_t(2, 1);
         xlo = floor(x3_x); ylo = floor(x3_y); xhi = ceil(x3_x); yhi = ceil(x3_y);
         delta_x = x3_x - xlo; delta_y = x3_y - ylo;
-        % ×óÉÏ½Ç
+        % å·¦ä¸Šè§’
         if xlo > 0 && xlo < w_p && ylo > 0 && ylo < h_p
             if img_p(ylo, xlo, 1) == 0
                 img_p(ylo, xlo, :) = img3(j, i, :) * (1 - delta_x) * (1 - delta_y);
@@ -116,7 +163,7 @@ for j = 1: h_3
                 img_p(ylo, xlo, :) = 0.5 * img_p(ylo, xlo, :) + 0.5 * img3(j, i, :) * (1 - delta_x) * (1 - delta_y);
             end
         end
-        % ÓÒÉÏ½Ç
+        % å³ä¸Šè§’
         if xhi > 0 && xhi < w_p && ylo > 0 && ylo < h_p
             if img_p(ylo, xhi, 1) == 0
                 img_p(ylo, xhi, :) = img3(j, i, :) * delta_x * (1 - delta_y);
@@ -124,7 +171,7 @@ for j = 1: h_3
                 img_p(ylo, xhi, :) = 0.5 * img_p(ylo, xhi, :) + 0.5 * img3(j, i, :) * delta_x * (1 - delta_y);
             end
         end
-        % ×óÏÂ½Ç
+        % å·¦ä¸‹è§’
         if xlo > 0 && xlo < w_p && yhi > 0 && yhi < h_p
             if img_p(yhi, xlo, 1) == 0
                 img_p(yhi, xlo, :) = img3(j, i, :) * (1 - delta_x) * delta_y;
@@ -132,7 +179,7 @@ for j = 1: h_3
                 img_p(yhi, xlo, :) =  0.5 * img_p(yhi, xlo, :) + 0.5 * img3(j, i, :) * (1 - delta_x) * delta_y;
             end
         end
-        % ÓÒÏÂ½Ç
+        % å³ä¸‹è§’
         if xhi > 0 && xhi < w_p && yhi >0 && yhi < h_p
             if img_p(yhi, xhi, 1) == 0
                 img_p(yhi, xhi, :) = img3(j, i, :) * delta_x * delta_y;
@@ -144,32 +191,6 @@ for j = 1: h_3
 end     
 %}     
 
-% fill the 0
-%{
-for i = 1:length(x)
-    count = 0;
-    ix = x(i);
-    iy = y(i);
-    try
-        if img_p(iy, ix+1, 0) ~= 0
-            img_p(iy, ix, :) = img_p(iy, ix, :) + img_p(iy, ix+1, :);
-            count = count + 1;
-        end
-    catch
-    end
-    try
-        if img_p(iy, ix-1, 0) ~= 0
-            img_p(iy, ix, :) = img_p(iy, ix, :) + img_p(iy, ix-1, :);
-            count = count + 1;
-        end
-    catch
-    end
-    if count ~= 0
-        img_p(j, i, :) = img_p(j, i, :) ./ count;
-    else
-    end
-end
-%}
 
 
 img_p = uint8(img_p);

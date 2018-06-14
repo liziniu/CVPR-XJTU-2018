@@ -50,8 +50,6 @@ for j = 1: h_1
             else
                 img_p(ylo, xlo, :) = img1(j, i, :);
             end
-        else
-            continue
         end
         
         if xlo > 0 && yhi <= h_p && xlo <= w_p && yhi > 0
@@ -60,8 +58,6 @@ for j = 1: h_1
             else
                 img_p(yhi, xlo, :) = img1(j, i, :);
             end
-        else
-            continue
         end  
         
         if xhi <= w_p && ylo > 0 && xhi > 0 && ylo <= h_p
@@ -70,8 +66,6 @@ for j = 1: h_1
             else
                 img_p(ylo, xhi, :) = img1(j, i, :);
             end
-        else
-            continue
         end
   
         if xhi <= w_p && yhi <= h_p && xhi > 0 && yhi>0
@@ -80,8 +74,6 @@ for j = 1: h_1
             else
                 img_p(yhi, xhi, :) = img1(j, i, :);
             end
-        else
-            continue
         end        
     end
 end
@@ -106,8 +98,6 @@ for j = 1: h_3
             else
                 img_p(ylo, xlo, :) = img3(j, i, :);
             end
-        else
-            continue
         end
         
         if xlo > 0 && yhi <= h_p && xlo <= w_p && yhi > 0
@@ -116,8 +106,6 @@ for j = 1: h_3
             else
                 img_p(yhi, xlo, :) = img3(j, i, :);
             end
-        else
-            continue
         end  
         
         if xhi <= w_p && ylo > 0 && xhi > 0 && ylo <= h_p
@@ -126,8 +114,6 @@ for j = 1: h_3
             else
                 img_p(ylo, xhi, :) = img3(j, i, :);
             end
-        else
-            continue
         end
   
         if xhi <= w_p && yhi <= h_p && xhi > 0 && yhi>0
@@ -136,8 +122,6 @@ for j = 1: h_3
             else
                 img_p(yhi, xhi, :) = img3(j, i, :);
             end
-        else
-            continue
         end        
     end
 end

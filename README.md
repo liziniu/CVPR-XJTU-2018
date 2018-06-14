@@ -29,3 +29,5 @@
  * [Carving](https://github.com/liziniu/cvpr_2018_spring/tree/master/Carving)
  
  * [QR Decomposition](https://github.com/liziniu/cvpr_2018_spring/tree/master/QR%20Decomposition)
+
+* [Panoramic Stitching](https://github.com/liziniu/cvpr_2018_spring/tree/master/Panoramic%20Stitching)

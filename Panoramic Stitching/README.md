@@ -3,12 +3,12 @@
 
 ### Demo
 <div align="center">
-  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Panoramic%20Stitching/img/source.png" title="source image" height="500" width="500">
+  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Panoramic%20Stitching/img/source.png" title="source image" height="400" width="600">
 </div>
 
 -----
 <div align="center">
-  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Panoramic%20Stitching/img/stitch.png" title="stitch image" height="500" width="500">
+  <img src="https://github.com/liziniu/cvpr_2018_spring/blob/master/Panoramic%20Stitching/img/stitch.png" title="stitch image" height="400" width="600">
 </div>
 
 

@@ -28,11 +28,25 @@ else
     img_p = zeros(h_p, w_p, c_2);
 end
 
-% 将img2置于中心
-img_p(:, 0.5*w_2:1.5*w_2-1, :) = img2(:, :, :);
+%{
+sigma = 0.4;
+[xg1,yg1] = meshgrid(1:w_1, 1:h_1); 
+mask_1 = (xg1 - w_1/2.0).^2 ./(sigma*w_1)^2 + (yg1 - h_1/2.0).^2./(sigma*h_1)^2;
+[xg2,yg2] = meshgrid(1:w_2, 1:h_2);
+mask_2 = (xg2 - w_2/2.0).^2 ./(sigma*w_2)^2 + (yg2 - h_2/2.0).^2./(sigma*h_2)^2;
+[xg3,yg3] = meshgrid(1:w_3, 1:h_3);
+mask_3 = (xg3 - w_3/2.0).^2 ./(sigma*w_3)^2 + (yg3 - h_3/2.0).^2./(sigma*h_3)^2;
+mask_1 = exp(-mask_1);
+mask_2 = exp(-mask_2);
+mask_3 = exp(-mask_3);
+img_p(:, 0.5*w_2:1.5*w_2-1, :) = mask_2 .* img2;
+%}
 
-figure;
-imshow(uint8(img_p))
+% 将img2置于中心
+img_p(:, 0.5*w_2:1.5*w_2-1, :) = img2;
+
+%figure;
+%imshow(uint8(img_p));
 % 前向变换
 for j = 1: h_1
     for i = 1: w_1
@@ -41,9 +55,9 @@ for j = 1: h_1
         x1_t = [x1_t(1, :) ./ (x1_t(3, :)+1e-10);       % 
                 x1_t(2, :) ./ (x1_t(3, :)+1e-10)];      % 2x1
         x1_t = x1_t + [0.5*w_2; 0];
-        xlo = int32(floor(x1_t(1, 1))); ylo = int32(round(x1_t(2, 1)));
-        xhi = int32(ceil(x1_t(1, 1))); yhi = int32(ceil(x1_t(2, 1)));
-
+        xlo = int64(floor(x1_t(1, 1))); ylo = int64(floor(x1_t(2, 1)));
+        xhi = int64(ceil(x1_t(1, 1))); yhi = int64(ceil(x1_t(2, 1)));
+        
         if xlo > 0 && ylo > 0 && xlo <= w_p && ylo <= h_p
             if img_p(ylo, xlo, 1) ~= 0
                 img_p(ylo, xlo, :) = 0.5*img_p(ylo, xlo, :) + 0.5*img1(j, i, :);
@@ -51,7 +65,7 @@ for j = 1: h_1
                 img_p(ylo, xlo, :) = img1(j, i, :);
             end
         end
-        
+         
         if xlo > 0 && yhi <= h_p && xlo <= w_p && yhi > 0
             if img_p(yhi, xlo, 1) ~= 0
                 img_p(yhi, xlo, :) = 0.5*img_p(yhi, xlo, :) + 0.5*img1(j, i, :);
@@ -74,12 +88,13 @@ for j = 1: h_1
             else
                 img_p(yhi, xhi, :) = img1(j, i, :);
             end
-        end        
+        end      
     end
 end
 
 figure;
 imshow(uint8(img_p));
+title('左图与中间图的拼接');
 
 % 前向变换
 for j = 1: h_3
@@ -89,8 +104,8 @@ for j = 1: h_3
         x1_t = [x1_t(1, :) ./ (x1_t(3, :)+1e-10);       % 
                 x1_t(2, :) ./ (x1_t(3, :)+1e-10)];      % 2x1
         x1_t = x1_t + [0.5*w_2; 0];
-        xlo = int32(floor(x1_t(1, 1))); ylo = int32(round(x1_t(2, 1)));
-        xhi = int32(ceil(x1_t(1, 1))); yhi = int32(ceil(x1_t(2, 1)));
+        xlo = int64(floor(x1_t(1, 1))); ylo = int64(floor(x1_t(2, 1)));
+        xhi = int64(ceil(x1_t(1, 1))); yhi = int64(ceil(x1_t(2, 1)));
 
         if xlo > 0 && ylo > 0 && xlo <= w_p && ylo <= h_p
             if img_p(ylo, xlo, 1) ~= 0
@@ -181,5 +196,6 @@ img_p = uint8(img_p);
 
 figure;
 imshow(img_p);
+title('三幅图的拼接');
 
 end

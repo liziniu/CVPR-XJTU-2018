@@ -19,4 +19,4 @@
 
 ### How to run it
 
-replace your image in panoramic_stitch.m
+run panoramic_stitch.m

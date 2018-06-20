@@ -59,6 +59,7 @@ function [linked_edge] = hysteresis_thresholding(threshold_low, threshold_high, 
                  end
             end
         end
+        % if there is little difference in two iterations, stop it!
         count_ = sum(bin);
         if count_ - count <= 5
             break;
